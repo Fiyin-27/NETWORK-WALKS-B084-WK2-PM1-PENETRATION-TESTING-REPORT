@@ -1,8 +1,8 @@
 <div align="center">
+  
+# 🔍 Footprinting & Network Scanning Report
 
-# 🔐 Cybersecurity - Foot-printing and Network Scanning
-
-Practical footprinting and network scanning project built with Kali Linux, Nmap, and Zenmap.
+*Reconnaissance and scanning practical using Kali Linux, Nmap, and Zenmap*
 
 </div>
 
