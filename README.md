@@ -311,3 +311,157 @@ To list the DNS records of the domain and see how its name resolution is set up.
 
 ![dnsrecon result](screenshots/dnsrecon.png)
 
+## 2. Network Scanning with Zenmap
+
+This part of the practical moved from a public website to my own lab network. I used Zenmap, the graphical version of Nmap, to see which devices are connected and to draw a map of them.
+
+---
+
+### 1. Installing Zenmap
+
+| | |
+|---|---|
+| **Tool** | Zenmap |
+| **Platform** | Windows PC |
+
+#### Purpose
+
+To get Zenmap running so I could launch scans and read the results in a visual interface.
+
+#### Procedure
+
+I got the Zenmap installer from nmap.org, the official Nmap site, and installed it on my Windows PC.
+
+#### Findings
+
+| Item | Result |
+|------|--------|
+| Zenmap version | 7.993 |
+| Source | Official Nmap website |
+
+#### Observations
+
+- Zenmap is a visual layer on top of Nmap, so the scans themselves are still run by Nmap.
+- Setting up a scan and reading its results is easier here than in the command line.
+- Installing from the official site lowers the risk of getting a modified copy of the tool.
+
+---
+
+### 2. Identifying My Local IP and LAN Subnet
+
+| | |
+|---|---|
+| **Tool** | Windows Command Prompt |
+| **Target** | My own PC |
+
+#### Command
+
+```bash
+ipconfig
+```
+
+#### Purpose
+
+To learn my PC's address on the network so I could work out which range to scan.
+
+#### Findings
+
+| Item | Result |
+|------|--------|
+| IPv4 address (Ethernet 2) | 192.168.56.1 |
+| Subnet mask | 255.255.255.0 |
+| Network range scanned | 192.168.56.0/24 |
+
+#### Observations
+
+- My PC has more than one active network adapter, so I had to pick the right one.
+- Ethernet 2 has the mask 255.255.255.0, which gives the range 192.168.56.0/24 that I entered in Zenmap.
+- Scanning a different adapter's range would have shown a completely different set of devices.
+
+#### Screenshot
+
+![ipconfig result](screenshots/ipconfig.png)
+
+---
+
+### 3. Discovering Live Hosts
+
+| | |
+|---|---|
+| **Tool** | Zenmap (Nmap) |
+| **Target** | `192.168.56.0/24` |
+| **Scan profile** | Ping Scan |
+
+#### Command
+
+```bash
+nmap -sn 192.168.56.0/24
+```
+
+#### Purpose
+
+To see which devices on this network are currently switched on and answering.
+
+#### Findings
+
+The scan found **4 live hosts** out of 256 addresses, in 7.19 seconds:
+
+| No. | IP Address | MAC Address | Status |
+|-----|------------|-------------|--------|
+| 1 | 192.168.56.1 | 0A:00:27:00:00:04 (my own PC) | Live |
+| 2 | 192.168.56.100 | 08:00:27:F2:1C:E6 | Live |
+| 3 | 192.168.56.101 | 08:00:27:C3:FB:76 | Live |
+| 4 | 192.168.56.102 | 08:00:27:7B:80:18 | Live |
+
+#### Observations
+
+- Four devices answered out of the 256 addresses in the `/24` range.
+- 192.168.56.1 is my own PC. Its IP matches the Ethernet 2 address in `ipconfig`, and its MAC address (`0A:00:27:00:00:04`) matches the Physical Address shown in `ipconfig /all`.
+- The other three hosts report the MAC prefix `08:00:27`, which Nmap identifies as Oracle VirtualBox virtual NICs, so they are virtual machines.
+- My own PC's adapter uses the prefix `0A:00:27`, which is the pattern VirtualBox gives to its host-only network adapter on the host.
+- A ping scan only shows which hosts are alive. It does not look at their ports or services.
+
+#### Screenshot
+
+![Zenmap live hosts](screenshots/hosts.png)
+
+![Nmap output with MAC addresses](screenshots/nmap output.png)
+
+---
+
+### 4. Network Topology
+
+| | |
+|---|---|
+| **Tool** | Zenmap Topology tab |
+| **Target** | `192.168.56.0/24` |
+| **Output** | PDF |
+
+#### Purpose
+
+To show the scan results as a picture of the devices on the network instead of a plain list.
+
+#### Procedure
+
+When the scan was done, I switched to the **Topology** tab, checked that all the hosts appeared, and adjusted the view. I then exported it as a PDF, which the practical asked for.
+
+#### Findings
+
+| Item | Result |
+|------|--------|
+| Centre node | localhost (my own PC) |
+| Hosts shown | 192.168.56.1, 192.168.56.100, 192.168.56.101, 192.168.56.102 |
+| Number of hosts | 4 |
+
+#### Observations
+
+- The diagram places my PC (`localhost`) in the middle with the other discovered hosts connected around it.
+- All four live hosts from the ping scan appear in the map, so it agrees with the scan results.
+- Every host connects directly to the centre, which suggests they sit on the same network segment with no routers between them.
+- The PDF export gives a saved copy of the network layout that can go into the report.
+
+#### Screenshot
+
+![Network topology](screenshots/topology.png)
+
+---
