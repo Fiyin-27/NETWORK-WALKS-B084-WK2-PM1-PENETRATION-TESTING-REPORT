@@ -114,7 +114,7 @@ To collect the public registration record of the target domain, including the re
 - No registrant details appear in the registry WHOIS output, only the registrar's abuse contact.
 
 
-#### Screenshot
+#### Evidence:
 
 ![whois lookup result](screenshots/whois.png)
 
@@ -151,7 +151,7 @@ To discover the software and technologies behind the target website.
 - HTTP requests are redirected to HTTPS.
 - The site exposes software version numbers, which helps a tester match them against known vulnerabilities.
 
-#### Screenshot
+#### Evidence:
 
 ![whatweb result](screenshots/whatweb.png)    
 
@@ -188,7 +188,7 @@ To find the IP address that the domain name points to.
 - The answer was non-authoritative, meaning it came from Google's DNS server and not from the domain's own name servers.
 - Resolving a domain to its IP address is a basic reconnaissance step, because it shows which server to look at next.
 
-#### Screenshot
+#### Evidence:
 
 ![nslookup result](screenshots/nslookup.png)
 
@@ -228,7 +228,7 @@ To check how the web server responds to a request by reading its HTTP headers.
 - The Link header points to the WordPress REST API, which further confirms the site runs on WordPress.
 - The session cookie is marked Secure and HttpOnly, which are good cookie security settings.
 
-#### Screenshot
+#### Evidence:
 
 ![curl result](screenshots/curl-I.png)
 
@@ -265,7 +265,7 @@ To find out if the website sits behind a Web Application Firewall (WAF) and, if 
 - Knowing a WAF is present helps a tester plan how to approach later authorized testing.
 - Detecting a WAF does not show how well it is configured or how effective the protection is.
 
-#### Screenshot
+#### Evidence:
 
 ![wafw00f result](screenshots/wafw00f.png)
 
@@ -307,7 +307,7 @@ To list the DNS records of the domain and see how its name resolution is set up.
 - The SRV records show the domain uses cPanel email autodiscovery.
 - The SPF record shows which servers are allowed to send email for the domain.
 
-#### Screenshot
+#### Evidence:
 
 ![dnsrecon result](screenshots/dnsrecon.png)
 
@@ -382,7 +382,7 @@ To learn my PC's address on the network so I could work out which range to scan.
 - Ethernet 2 has the mask 255.255.255.0, which gives the range 192.168.56.0/24 that I entered in Zenmap.
 - Scanning a different adapter's range would have shown a completely different set of devices.
 
-#### Screenshot
+#### Evidence:
 
 ![ipconfig result](screenshots/ipconfig.png)
 
@@ -425,7 +425,7 @@ The scan found **4 live hosts** out of 256 addresses, in 7.19 seconds:
 - My own PC's adapter uses the prefix `0A:00:27`, which is the pattern VirtualBox gives to its host-only network adapter on the host.
 - A ping scan only shows which hosts are alive. It does not look at their ports or services.
 
-#### Screenshot
+#### Evidence:
 
 ![Zenmap live hosts](screenshots/hosts.png)
 
@@ -464,8 +464,75 @@ When the scan was done, I switched to the **Topology** tab, checked that all the
 - Every host connects directly to the centre, which suggests they sit on the same network segment with no routers between them.
 - The PDF export gives a saved copy of the network layout that can go into the report.
 
-#### Screenshot
+#### Evidence:
 
 ![Network topology](screenshots/topology.png)
 
 ---
+##  Security Observations and Preliminary Risk Review
+
+The table below lists what stood out during the assessment and why each item matters. The priority ratings are my own preliminary judgement.
+
+| No. | Observation | Why It Matters | Preliminary Priority |
+|-----|-------------|----------------|----------------------|
+| 1 | Domain registration details are publicly available (WHOIS) | Gives an outsider a starting point for mapping who runs the domain and where it is hosted | Low |
+| 2 | Web technology identification | Visible versions can be matched against known flaws, so outdated components could be targeted | Medium |
+| 3 | The domain resolves to a single public IP address | Shows which server hosts the site and where further scanning would focus | Low |
+| 4 | HTTP response headers | Headers can expose server and application information and may show missing security settings | Medium |
+| 5 |Web application firewall (WAF) | Tells an outsider what defensive tools sit in front of the site | Low |
+| 6 | DNS records listed publicly | Records such as mail, name server and SRV entries help map the domain's wider infrastructure | Medium |
+| 7 | Web ports (HTTP and HTTPS) are open | Every internet-facing port adds to the attack surface that must be kept patched and monitored | Medium |
+| 8 | Several services were found on scanme.nmap.org | Shows how much a scan can reveal about a host's exposed services (this is a practice target) | Informational |
+| 9 | Operating system detection was attempted | A correct guess can help narrow down platform-specific weaknesses | Low |
+
+### Note:
+
+These are potential security considerations, not confirmed vulnerabilities.
+
+No exploitation or vulnerability verification was carried out. The priorities are preliminary and would need to be checked through further authorized testing.
+
+## Defensive Recommendations
+
+Based on the observations in section 10, these are the steps I would suggest to reduce the exposure that was found.
+
+| No. | Area | Recommendation |
+|-----|------|----------------|
+| 1 | Domain registration | Check what the public WHOIS record reveals and turn on domain privacy where the registrar allows it. Keep the domain lock enabled. |
+| 2 | Software updates | Keep WordPress, the Download Manager plugin and any other web components on their latest versions, and remove plugins that are not needed. |
+| 3 | Server protection | Limit direct access to the origin server with network controls such as firewall rules, so only expected traffic reaches it. |
+| 4 | HTTP headers | Review the response headers, hide server and version details where possible, and add security headers such as HSTS, X-Content-Type-Options and Content-Security-Policy. |
+| 5 | WAF | Keep the ModSecurity rules up to date, tune them to avoid gaps, and read the logs regularly. |
+| 6 | DNS | Audit the DNS records from time to time, delete old or unused entries, and consider enabling DNSSEC, since it was unsigned. |
+| 7 | Open ports | Turn off services that are not needed and restrict access to sensitive ports to trusted addresses only. |
+| 8 | Operating system | Install security patches promptly and use a host firewall to control what can connect. |
+
+*These recommendations are general defensive suggestions based on the observations. They should be reviewed and tested before being applied to any live system.*
+
+## What I Learned
+
+This practical showed me that a lot can be learned about a target without breaking into anything. With a few simple commands, I found the software a website runs on, its IP address, its firewall and how its DNS is set up, all from public information.
+
+I also learned that each tool answers a different question:
+
+- **whois** tells me who is behind a domain.
+- **whatweb** shows what it is built with.
+- **nslookup** tells me where it lives.
+- **curl** shows how the server talks.
+- **wafw00f** shows how it is protected.
+- **dnsrecon** shows how it is set up.
+
+With Zenmap, I learned how to find my own subnet with `ipconfig`, discover the devices on my network, and read their IP and MAC addresses. Seeing the topology map made the network much easier to picture than a list of addresses.
+
+Most of all, I learned that visible information is not the same as a vulnerability, and that testing should only ever be done with permission.
+
+## 👧 Author
+**Owoseni Fiyinfoluwa Faithfulness**
+
+Cybersecurity Intern at Network Walks
+
+## 📌 Project Information 
+
+**Project:** Footprinting, Network Scanning and Vulnerability Assessment|
+**Week:** 02|
+**Program Name:** Cybersecurity at Networkwalks|
+**Repository:** Github
