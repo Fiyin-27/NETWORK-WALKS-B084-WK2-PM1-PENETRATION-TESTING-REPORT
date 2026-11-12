@@ -393,11 +393,6 @@ To learn my PC's address on the network so I could work out which range to scan.
 | **Target** | `192.168.56.0/24` |
 | **Scan profile** | Ping Scan |
 
-#### Command
-
-```bash
-nmap -sn 192.168.56.0/24
-```
 
 #### Purpose
 
