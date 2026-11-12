@@ -40,8 +40,6 @@ The goal of this practical was to learn how a security tester collects informati
 
 ## 🛠️ Tools and Purposes
 
-## Tools Used
-
 | Tool | Purpose |
 |------|---------|
 | **Kali Linux** | Main operating system used for all footprinting and testing work |
@@ -71,7 +69,7 @@ The goal of this practical was to learn how a security tester collects informati
 
 <div align="center">
   
-## Part 1 - Foot-printing and Reconnaissance
+## Part 1 - 🔍 Footprinting and Reconnaissance
 
 </div>
 
@@ -79,7 +77,7 @@ Footprinting means collecting information about a target before any deeper secur
 
 ---
 
-### 1. whois Lookup
+### 1. 📇 WHOIS Lookup
 
 | | |
 |---|---|
@@ -118,7 +116,7 @@ To collect the public registration record of the target domain, including the re
 
 ![whois lookup result](screenshots/whois.png)
 
-### 2.  whatweb: Web Technology Fingerprinting
+### 2.  🧩 whatweb: Web Technology Fingerprinting
 
 | | |
 |---|---|
@@ -155,7 +153,7 @@ To discover the software and technologies behind the target website.
 
 ![whatweb result](screenshots/whatweb.png)    
 
-### 3. Nslookup: DNS Resolution
+### 3. 📍 Nslookup: DNS Resolution
 
 | | |
 |---|---|
@@ -193,7 +191,7 @@ To find the IP address that the domain name points to.
 ![nslookup result](screenshots/nslookup.png)
 
 ---
-### 4. Curl: HTTP Response Headers
+### 4. 📨 Curl: HTTP Response Headers
 
 | | |
 |---|---|
@@ -234,7 +232,7 @@ To check how the web server responds to a request by reading its HTTP headers.
 
 ---
 
-### 5. wafw00f: Web Application Firewall Detection
+### 5. 🔥 Wafw00f: Web Application Firewall Detection
 
 | | |
 |---|---|
@@ -271,7 +269,7 @@ To find out if the website sits behind a Web Application Firewall (WAF) and, if 
 
 ---
 
-### 6. DNSRecon: DNS Record Enumeration
+### 6. 🗂️ DNSRecon: DNS Record Enumeration
 
 | | |
 |---|---|
@@ -313,7 +311,7 @@ To list the DNS records of the domain and see how its name resolution is set up.
 
 <div align="center">
   
-## Part 2 - Network Scanning with Zenmap
+## 🌐 Part 2 - Network Scanning with Zenmap
 
 </div>
 
@@ -321,7 +319,7 @@ This part of the practical moved from a public website to my own lab network. I 
 
 ---
 
-### 1. Installing Zenmap
+### 1. 💾 Installing Zenmap
 
 | | |
 |---|---|
@@ -351,7 +349,7 @@ I got the Zenmap installer from nmap.org, the official Nmap site, and installed 
 
 ---
 
-### 2. Identifying My Local IP and LAN Subnet
+### 2. 🖥️ Identifying My Local IP and LAN Subnet
 
 | | |
 |---|---|
@@ -388,7 +386,7 @@ To learn my PC's address on the network so I could work out which range to scan.
 
 ---
 
-### 3. Discovering Live Hosts
+### 3. 📡 Discovering Live Hosts
 
 | | |
 |---|---|
@@ -433,7 +431,7 @@ The scan found **4 live hosts** out of 256 addresses, in 7.19 seconds:
 
 ---
 
-### 4. Network Topology
+### 4. 🗺️ Network Topology
 
 | | |
 |---|---|
@@ -469,7 +467,7 @@ When the scan was done, I switched to the **Topology** tab, checked that all the
 ![Network topology](screenshots/topology.png)
 
 ---
-##  Security Observations and Preliminary Risk Review
+##  🛡️ Security Observations and Preliminary Risk Review
 
 The table below lists what stood out during the assessment and why each item matters. The priority ratings are my own preliminary judgement.
 
@@ -491,9 +489,9 @@ These are potential security considerations, not confirmed vulnerabilities.
 
 No exploitation or vulnerability verification was carried out. The priorities are preliminary and would need to be checked through further authorized testing.
 
-## Defensive Recommendations
+## ✅ Defensive Recommendations
 
-Based on the observations in section 10, these are the steps I would suggest to reduce the exposure that was found.
+Based on my observations, these are the steps I would suggest to reduce the exposure that was found.
 
 | No. | Area | Recommendation |
 |-----|------|----------------|
@@ -508,7 +506,7 @@ Based on the observations in section 10, these are the steps I would suggest to 
 
 *These recommendations are general defensive suggestions based on the observations. They should be reviewed and tested before being applied to any live system.*
 
-## What I Learned
+## 💡 What I Learned
 
 This practical showed me that a lot can be learned about a target without breaking into anything. With a few simple commands, I found the software a website runs on, its IP address, its firewall and how its DNS is set up, all from public information.
 
