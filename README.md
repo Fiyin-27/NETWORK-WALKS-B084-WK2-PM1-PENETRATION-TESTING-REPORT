@@ -311,7 +311,11 @@ To list the DNS records of the domain and see how its name resolution is set up.
 
 ![dnsrecon result](screenshots/dnsrecon.png)
 
-## 2. Network Scanning with Zenmap
+<div align="center">
+  
+## Part 2 - Network Scanning with Zenmap
+
+</div>
 
 This part of the practical moved from a public website to my own lab network. I used Zenmap, the graphical version of Nmap, to see which devices are connected and to draw a map of them.
 
@@ -425,7 +429,7 @@ The scan found **4 live hosts** out of 256 addresses, in 7.19 seconds:
 
 ![Zenmap live hosts](screenshots/hosts.png)
 
-![Nmap output with MAC addresses](screenshots/nmap output.png)
+![Nmap output with MAC addresses](screenshots/nmapoutput.png)
 
 ---
 
