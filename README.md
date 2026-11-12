@@ -64,7 +64,6 @@ The goal of this practical was to learn how a security tester collects informati
 | Processor | Intel Core i7 |
 | Network environment | Virtual network |
 | Primary target | `networkwalks.com` |
-| Secondary target | `scanme.nmap.org` |
 | Secondary target IP | 45.33.32.156 |
 
 <div align="center">
@@ -480,8 +479,7 @@ The table below lists what stood out during the assessment and why each item mat
 | 5 |Web application firewall (WAF) | Tells an outsider what defensive tools sit in front of the site | Low |
 | 6 | DNS records listed publicly | Records such as mail, name server and SRV entries help map the domain's wider infrastructure | Medium |
 | 7 | Web ports (HTTP and HTTPS) are open | Every internet-facing port adds to the attack surface that must be kept patched and monitored | Medium |
-| 8 | Several services were found on scanme.nmap.org | Shows how much a scan can reveal about a host's exposed services (this is a practice target) | Informational |
-| 9 | Operating system detection was attempted | A correct guess can help narrow down platform-specific weaknesses | Low |
+| 8 | Operating system detection was attempted | A correct guess can help narrow down platform-specific weaknesses | Low |
 
 ### Note:
 
@@ -504,7 +502,7 @@ Based on my observations, these are the steps I would suggest to reduce the expo
 | 7 | Open ports | Turn off services that are not needed and restrict access to sensitive ports to trusted addresses only. |
 | 8 | Operating system | Install security patches promptly and use a host firewall to control what can connect. |
 
-*These recommendations are general defensive suggestions based on the observations. They should be reviewed and tested before being applied to any live system.*
+*These recommendations are general defensive suggestions based on my observations. They should be reviewed and tested before being applied to any live system.*
 
 ## 💡 What I Learned
 
@@ -529,7 +527,6 @@ This project was completed for educational and cybersecurity training purposes, 
 
 - **Footprinting:** done only on the authorized Networkwalks target, using publicly available information.
 - **Local network scan:** done on my own lab network.
-- **Practice scanning:** `scanme.nmap.org` is a target the Nmap project provides for scanning practice.
 - **No exploitation:** no exploitation, vulnerability testing, or unauthorized access was attempted.
 - **Findings and recommendations:** the findings are observations made during the exercise, and the recommendations are meant to improve security awareness and defensive practice.
 
