@@ -57,7 +57,7 @@ The goal of this practical was to learn how a security tester collects informati
 
 | Component | Configuration |
 |-----------|---------------|
-| Host operating system | Windows 10 |
+| Host operating system | Windows 11 |
 | Hypervisor | Oracle VirtualBox 7.2 |
 | Security OS | Kali Linux |
 | RAM | 8 GB |
@@ -522,6 +522,18 @@ I also learned that each tool answers a different question:
 With Zenmap, I learned how to find my own subnet with `ipconfig`, discover the devices on my network, and read their IP and MAC addresses. Seeing the topology map made the network much easier to picture than a list of addresses.
 
 Most of all, I learned that visible information is not the same as a vulnerability, and that testing should only ever be done with permission.
+
+## ⚠️ Disclaimer
+
+This project was completed for educational and cybersecurity training purposes, and all activity stayed within an authorized scope.
+
+- **Footprinting:** done only on the authorized Networkwalks target, using publicly available information.
+- **Local network scan:** done on my own lab network.
+- **Practice scanning:** `scanme.nmap.org` is a target the Nmap project provides for scanning practice.
+- **No exploitation:** no exploitation, vulnerability testing, or unauthorized access was attempted.
+- **Findings and recommendations:** the findings are observations made during the exercise, and the recommendations are meant to improve security awareness and defensive practice.
+
+Unauthorized access to computer systems may break the law. Only test systems and networks you own or have clear permission to test, and always stay within an approved scope.
 
 ## 👧 Author
 **Owoseni Fiyinfoluwa Faithfulness**
