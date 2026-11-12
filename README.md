@@ -1,6 +1,6 @@
 <div align="center">
   
-# 🔍 Footprinting & Network Scanning Report
+# Footprinting & Network Scanning Report
 
 *Reconnaissance and scanning practical using Kali Linux, Nmap, and Zenmap*
 
@@ -69,7 +69,7 @@ The goal of this practical was to learn how a security tester collects informati
 
 <div align="center">
   
-## Part 1 - 🔍 Footprinting and Reconnaissance
+## 🔍 Part 1 - Footprinting and Reconnaissance
 
 </div>
 
